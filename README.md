@@ -2,7 +2,7 @@
 
 Is a take on porting python pandas into rust
 
-<img src="https://p1.hiclipart.com/preview/511/912/977/3d-rusty-buckets-rusted-brown-metal-bucket-png-clipart.jpg"></>
+<img src="./docs/rustybucket.png"></>
 
 ### the story of the rustybucket
 Yo, listen up, I got a story to tell
