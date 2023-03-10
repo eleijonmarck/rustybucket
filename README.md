@@ -2,7 +2,7 @@
 
 Is a take on porting python pandas into rust
 
-<img src="./docs/rustybucket.png"></>
+<img src="./docs/rustybucket.png" width="30%" height="30%">
 
 ### the story of the rustybucket
 Yo, listen up, I got a story to tell
