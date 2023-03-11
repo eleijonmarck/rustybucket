@@ -84,6 +84,7 @@ extern crate test;
 
 #[cfg(test)]
 mod tests {
+
     use super::*;
     use test::Bencher;
 
@@ -93,6 +94,10 @@ mod tests {
             let s = series::new_series(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
             let _ = &s[1..3];
         }
-        b.iter( || {(0..1000).map(|_| slice_series)})
+        b.iter( || {
+            for _ in 0..1000 {
+                test::black_box(slice_series());
+            }
+        });
     }
 }
