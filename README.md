@@ -26,6 +26,10 @@ Are excluding from benchmark tests for now.
 ### goals
 
 ***slicing and concatination***
+- [x] first slicing test
+- [x] first concat test
+- [] improved data structures for slicing
+- [] improved data structures for concatinating
 
 TODO for improvements:
 create a view struct on top of the series
