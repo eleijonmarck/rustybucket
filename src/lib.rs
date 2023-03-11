@@ -1,3 +1,5 @@
+#![feature(test)]
+
 pub mod series {
 #![allow(dead_code)]
 
@@ -76,4 +78,18 @@ mod tests {
     println!("first 10 elements {:?}",&s[..10]);
     }
 }
+}
+
+extern crate test;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[bench]
+    fn slice_a_series(b: &mut Bencher) {
+        let s = series::new_series(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+        let _ = s[1..3];
+    }
 }

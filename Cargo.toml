@@ -4,13 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-criterion = "0.4.0"
-
-[[bench]]
-name = "slicing_benchmark"
-harness = false
-
-[profile.bench]
-lto = true
+[toolchain]
+channel = "nightly"
