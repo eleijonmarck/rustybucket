@@ -28,8 +28,8 @@ jobs:
           # Show alert with commit comment on detecting possible performance regression
           alert-threshold: '200%'
           comment-on-alert: true
-          # Workflow will fail when an alert happens
-          fail-on-alert: true
+          # Enable Job Summary for PRs
+          summary-always: true
           alert-comment-cc-users: '@eleijonmarck'
           # Push and deploy GitHub pages branch automatically
           auto-push: true

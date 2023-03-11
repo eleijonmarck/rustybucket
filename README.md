@@ -5,9 +5,16 @@ Is a take on porting some python pandas into rust for performance improvements o
 <img src="./docs/rustybucket.png" width="30%" height="30%">
 
 ## benchmarks
-use of https://github.com/bheisler/criterion.rs
 
-### aggregations
+### setting up the benchmarks
+- make use of the benchmark-results github action - https://github.com/marketplace/actions/continuous-benchmark
+- setup gh-pages w. dev/bench
+- setup benchmark tests
+- add blackbox to each benchmark; `test::black_box`An identity function that hints to the compiler to be maximally pessimistic about what black_box could do.
+
+### non-goals
+
+**aggregations**
 Initially aggregation was the main goal to benchmark but that is a one time pass through a Vec<T> which is not that interesting and will be fast by default.
 Such functions such as:
 - sum
@@ -16,7 +23,9 @@ Such functions such as:
 
 Are excluding from benchmark tests for now.
 
-### slicing and concatination
+### goals
+
+***slicing and concatination***
 
 TODO for improvements:
 create a view struct on top of the series
@@ -24,6 +33,7 @@ create a view struct on top of the series
 - implements the same traits as the series struct
 - once the view needs to be copied we just clone the view slice
 
+## notes
 
 ### series implementation vec vs slice
 A vector **owns** its elements. That means the vector is responsible for allocating and freeing the elements it points to. The lifetime of the vector's elements is the same as the lifetime of the vector itself, so there's no need to specify a lifetime to the Vec type.
