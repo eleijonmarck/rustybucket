@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1678555386497,
+  "lastUpdate": 1678556643446,
   "repoUrl": "https://github.com/eleijonmarck/rustybucket",
   "entries": {
     "Rust Benchmark": [
@@ -89,6 +89,36 @@ window.BENCHMARK_DATA = {
             "name": "tests::slice_a_series",
             "value": 0,
             "range": "± 0",
+            "unit": "ns/iter"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "eric.leijonmarck@gmail.com",
+            "name": "Eric Leijonmarck",
+            "username": "eleijonmarck"
+          },
+          "committer": {
+            "email": "eric.leijonmarck@gmail.com",
+            "name": "Eric Leijonmarck",
+            "username": "eleijonmarck"
+          },
+          "distinct": true,
+          "id": "2f335a49c2ac9e698bc8d01b07dd885b0ced9ac2",
+          "message": "blackbox",
+          "timestamp": "2023-03-11T17:43:34Z",
+          "tree_id": "b5e9de82262d9c584034cc9e9e5cc927541f2f85",
+          "url": "https://github.com/eleijonmarck/rustybucket/commit/2f335a49c2ac9e698bc8d01b07dd885b0ced9ac2"
+        },
+        "date": 1678556642282,
+        "tool": "cargo",
+        "benches": [
+          {
+            "name": "tests::slice_a_series",
+            "value": 412,
+            "range": "± 2",
             "unit": "ns/iter"
           }
         ]
