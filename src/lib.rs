@@ -89,7 +89,10 @@ mod tests {
 
     #[bench]
     fn slice_a_series(b: &mut Bencher) {
-        let s = series::new_series(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-        let _ = s[1..3];
+        fn slice_series() {
+            let s = series::new_series(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+            let _ = &s[1..3];
+        }
+        b.iter( || {slice_series()})
     }
 }
