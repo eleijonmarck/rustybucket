@@ -5,6 +5,7 @@ Is a take on porting some python pandas into rust for performance improvements o
 <img src="./docs/rustybucket.png" width="30%" height="30%">
 
 ## benchmarks
+use of https://github.com/bheisler/criterion.rs
 
 ### aggregations
 Initially aggregation was the main goal to benchmark but that is a one time pass through a Vec<T> which is not that interesting and will be fast by default.

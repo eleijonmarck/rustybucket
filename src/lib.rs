@@ -1,3 +1,4 @@
+pub mod series {
 #![allow(dead_code)]
 
 use std::fmt::Debug;
@@ -6,7 +7,7 @@ trait SeriesTrait<T: Debug> {
     fn new(name: String, data: Vec<T>) -> Self;
     fn count(&self) -> usize;
 }
-struct Series<T> {
+pub struct Series<T> {
     name: String,
     data: Vec<T>,
     dtype: String,
@@ -46,8 +47,22 @@ where
     }
 }
 
-fn main() {
-    let s = Series::new(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+pub fn new_series<T>(name: String, data: Vec<T>) -> Series<T> {
+    Series {
+        name,
+        data,
+        dtype: determine_type::<T>(),
+    }
+}
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn output() {
+            let s = Series::new(String::from("hej"), vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
     println!("{}",s.count());
     println!("{}",s.dtype);
     println!("the 2 and 3 elements {:?}",&s[1..3]);
@@ -59,4 +74,6 @@ fn main() {
     println!("{}",s.dtype);
     println!("the 2 and 3 elements {:?}",&s[1..3]);
     println!("first 10 elements {:?}",&s[..10]);
+    }
+}
 }
