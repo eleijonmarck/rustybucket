@@ -29,7 +29,7 @@ Are excluding from benchmark tests for now.
 - [x] first slicing test
 - [x] first concat test
 - [] improved data structures for slicing
-- [] improved data structures for concatinating
+- [] improved data structures for slicing
 
 TODO for improvements:
 create a view struct on top of the series
