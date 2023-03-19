@@ -5,11 +5,11 @@ use crate::series;
 #[derive(Debug, Clone)]
 struct DataFrame<T: Clone> {
     // BtreeMap is a sorted map
-    col_name_to_series: BTreeMap<String, series::Series<T>>,
+    col_name_to_series: BTreeMap<String, series::Series>,
 }
 
-impl<T: Clone> DataFrame<T> {
-    pub fn new(series: Vec<series::Series<T>>) -> Self {
+impl DataFrame {
+    pub fn new(series: Vec<series::Series>) -> Self {
         let mut col_name_to_series = BTreeMap::new();
         for s in series {
             col_name_to_series.insert(s.name.clone(), s);
