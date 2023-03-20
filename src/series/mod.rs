@@ -49,6 +49,8 @@ fn determine_type<T>(dtype: Option<String>) -> String {
 
 #[cfg(test)]
 mod tests {
+    use crate::series::from::NamedFrom;
+
     use super::*;
     // use test::Bencher;
 

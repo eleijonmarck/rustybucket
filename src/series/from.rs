@@ -1,56 +1,45 @@
 use std::marker::PhantomData;
 
-use crate::datatypes::dtype::{DataType, IteratorRef};
+use crate::datatypes::dtype::{DataType, RustyDataType};
 
 use super::{series_trait::SeriesTrait, Series};
 
-pub trait ThisDataType: Send + Sync {
-    fn get_dtype(self) -> DataType;
-}
-impl ThisDataType for i32
-where
-    i32: Sized,
-{
-    fn get_dtype(self) -> DataType {
-        DataType::I32
-    }
-}
 pub trait IntoSeries {
     fn is_series() -> bool {
         false
     }
     fn into_series(self) -> Series;
 }
-pub struct ChunkedArray<T>
-where
-    T: ThisDataType,
-{
-    data: IteratorRef,
+pub struct ChunkedArray<T: RustyDataType + ?Sized> {
+    // data: IteratorRef,
+    // data: IterItem,
+    data: Vec<Box<dyn RustyDataType>>,
     name: String,
     phantom: PhantomData<T>,
     dtype: DataType,
 }
-pub trait NewChunkedArray<T> {
-    fn from_slice(name: &str, v: &[T]) -> Self;
+pub trait NewChunkedArray<T, N> {
+    fn from_slice(name: &str, v: &[N]) -> Self;
 }
 
-impl<T> NewChunkedArray<T> for ChunkedArray<T>
+impl<T> NewChunkedArray<T, T> for ChunkedArray<T>
 where
-    T: ThisDataType + std::clone::Clone + 'static,
+    T: RustyDataType + ?Sized + std::clone::Clone + 'static,
 {
     fn from_slice(name: &str, v: &[T]) -> Self {
-        let arr = v.to_vec();
-        let iter: IteratorRef = Box::new(arr.into_iter().map(|v| v.get_dtype()));
         ChunkedArray {
             name: name.to_string(),
-            dtype: T::get_dtype(v[0].clone()),
-            data: iter,
+            dtype: v[0].get_dtype(),
+            data: v
+                .iter()
+                .map(|x| Box::new(x.clone()) as Box<dyn RustyDataType>)
+                .collect(),
             phantom: PhantomData,
         }
     }
 }
 
-impl<T: ThisDataType + 'static> IntoSeries for ChunkedArray<T>
+impl<T: RustyDataType + 'static + std::clone::Clone> IntoSeries for ChunkedArray<T>
 where
     ChunkedArray<T>: SeriesTrait,
 {
@@ -60,11 +49,15 @@ where
     {
         Series(Box::new(self))
     }
+
+    fn is_series() -> bool {
+        false
+    }
 }
 //
 impl<T> SeriesTrait for ChunkedArray<T>
 where
-    T: ThisDataType + 'static + Clone,
+    T: RustyDataType + 'static + Clone,
 {
     fn dtype(&self) -> &DataType {
         &self.dtype
@@ -72,18 +65,23 @@ where
     fn name(&self) -> &str {
         self.name.as_str()
     }
-    fn chunks(&self) -> &IteratorRef {
+    fn chunks(&self) -> &Vec<Box<dyn RustyDataType>> {
         &self.data
     }
 }
+pub trait NamedFrom<T, Phantom: ?Sized> {
+    /// Initialize by name and values.
+    fn new(name: &str, _: T) -> Self;
+}
 
-macro_rules! impl_new_series {
+macro_rules! impl_new_series_from_slice {
     ($t:ty) => {
-        impl Series {
-            pub fn new(name: &str, v: &[$t]) -> Self {
-                ChunkedArray::<$t>::from_slice(name, v).into_series()
+        impl<T: AsRef<$t>> NamedFrom<T, $t> for Series {
+            fn new(name: &str, v: T) -> Self {
+                ChunkedArray::<$t>::from_slice(name, v.as_ref()).into_series()
             }
         }
     };
 }
-impl_new_series!(i32);
+impl_new_series_from_slice!([i32]);
+// impl_new_series_from_slice!(Vec<i32>);
